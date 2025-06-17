@@ -1,0 +1,38 @@
+# Environment management
+python-dotenv
+
+# Date and time handling
+datetime
+
+# Core data libraries
+pandas
+numpy
+
+# Data scraping & web APIs
+
+# Statistical Testing
+scipy
+statsmodels
+
+# Machine Learning
+scikit-learn
+xgboost
+
+# Interpretability
+shap
+lime
+
+# Visualization
+matplotlib
+seaborn
+pgeocode
+
+# Interactive analysis
+jupyterlab
+streamlit
+
+# Database connectors
+oracledb
+
+# Testing
+pytest
