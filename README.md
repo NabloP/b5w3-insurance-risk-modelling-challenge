@@ -1,27 +1,32 @@
-# Fintech UX Challenge Week 2 - 10 Academy
+# B5W3: Insurance Risk Analytics & Predictive Modeling Week 3 - 10 Academy
 
 ## 🗂 Challenge Context
-This repository documents the submission for 10 Academy’s **B5W2: Customer Experience Analytics for Fintech Apps** challenge. The objective is to evaluate customer satisfaction with mobile banking apps by scraping, analyzing, and visualizing user reviews from the Google Play Store for:
+This repository documents the submission for 10 Academy’s **B5W3: Insurance Risk Analytics & Predictive Modeling** challenge.
+The goal is to support AlphaCare Insurance Solutions (ACIS) in optimizing underwriting and pricing by analyzing customer, vehicle, and claims data to:
 
-- Commercial Bank of Ethiopia (CBE)
-- Bank of Abyssinia (BOA)
-- Dashen Bank
+- Identify low-risk customer segments
 
-This project simulates the role of a data analyst at Omega Consultancy, advising fintechs on improving user experience and retention.
+- Predict future risk exposure
+
+- Enable data-driven premium optimization
+
+This project simulates the role of a risk analyst at AlphaCare Insurance Solutions (ACIS), supporting actuarial and underwriting teams with data-driven insights for optimizing premium pricing and minimizing claims exposure.
 
 The project includes:
 
-- 🧹 Clean scraping and preprocessing of Play Store reviews  
+- 🧹 Clean and structured ingestion of raw customer, vehicle, and claims datasets
 
-- 💬 Sentiment analysis (VADER, DistilBERT) and keyword clustering  
+- 📊 Multi-layered Exploratory Data Analysis (EDA) across customer, product, geographic, and vehicle dimensions
 
-- 📊 UX pain point detection and feature insight generation  
+- 🧠 Modular profiling of loss ratio, outliers, and segment-specific profitability
 
-- 🛢️ Relational database setup using Oracle XE  
+- 🗃️ Defensive schema auditing and data quality validation routines
 
-- 📈 Stakeholder-ready visualizations and diagnostics
+- 📦 Reproducible data versioning using DVC with Git and local cache integration
 
-- ✅ **Streamlit App** for a seamless, non-technical user experience  
+- 🧪 Scaffolded modeling pipeline for classification-based claims risk prediction (planned)
+
+- ✅ Structured orchestration of insights through testable, class-based Python modules and `eda_orchestrator.py` runner script
 
 
 ## 🔧 Project Setup
@@ -31,8 +36,8 @@ To reproduce this environment:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/NabloP/b5w2-customer-ux-analytics-challenge.git
-cd b5w2-customer-ux-analytics-challenge
+git clone https://github.com/NabloP/b5w3-insurance-risk-modelling-challenge.git
+cd b5w3-insurance-risk-modelling-challenge
 ```
 
 2. Create and activate a virtual environment:
@@ -40,15 +45,15 @@ cd b5w2-customer-ux-analytics-challenge
 **On Windows:**
     
 ```bash
-python -m venv customer-ux-challenge
-.\customer-ux-challenge\Scripts\Activate.ps1
+python -m venv insurance-challenge
+.\insurance-challenge\Scripts\Activate.ps1
 ```
 
 **On macOS/Linux:**
 
 ```bash
-python3 -m venv customer-ux-challenge
-source customer-ux-challenge/bin/activate
+python3 -m venv insurance-challenge
+source insurance-challenge/bin/activate
 ```
 
 3. Install dependencies
@@ -86,139 +91,143 @@ solar-challenge-week1/
 │       ├── unittests.yml
 ├── data/
 │   ├── cleaned/
-│   │   ├── reviews_CBE_20250607_124725_cleaned.csv
-│   │   ├── reviews_all_banks_20250607_140803_cleaned.csv
-│   │   ├── reviews_all_banks_20250607_141201_cleaned.csv
-│   │   ├── reviews_all_banks_cleaned.csv
 │   ├── outputs/
-│   │   ├── reviews_enriched_all.csv
-│   │   ├── reviews_with_sentiment_themes.csv
-│   │   ├── spacy_symspell_corrected_100.csv
-│   │   ├── vader_tfidf_enriched_100.csv
+│   │   ├── loss_ratio_bubble_map.png
 │   │   └── plots/
-│   │       ├── average_rating_by_theme_and_bank.png
-│   │       ├── boa_word_cloud.png
-│   │       ├── cbe_word_cloud.png
-│   │       ├── complaints_by_theme_and_bank.png
-│   │       ├── dashen_word_cloud.png
-│   │       ├── feature_requests_by_theme_and_bank.png
-│   │       ├── user_ratings_by_bank.png
-│   │       ├── y_day_rolling_sentiment_trend_per_bank.png
 │   └── raw/
-│       ├── reviews_BOA_20250607_124729.csv
-│       ├── reviews_CBE_20250607_124725.csv
-│       ├── reviews_Dashen_20250607_124733.csv
-│       ├── reviews_all_banks.csv
-│       ├── reviews_all_banks_20250607_140803.csv
-│       ├── reviews_all_banks_20250607_141201.csv
-│       ├── reviews_all_banks_20250609_121659.csv
+│       ├── MachineLearningRating_v3.txt.dvc
+│       ├── opendb-2025-06-17.csv.dvc
+├── docs/
 ├── models/
-│   ├── mistral-7b-instruct-v0.2.Q4_K_M.gguf
-│   ├── tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf
-│   ├── verb-form-vocab.txt
-│   ├── distilbert-base-uncased-finetuned-sst-2-english/
-│   │   ├── README.md
-│   │   ├── config.json
-│   │   ├── gitattributes (1)
-│   │   ├── map.jpeg
-│   │   ├── pytorch_model.bin
-│   │   ├── tokenizer_config.json
-│   │   ├── vocab.txt
-│   └── gector_roberta_large_5k/
-│       ├── README.md
-│       ├── added_tokens.json
-│       ├── config.json
-│       ├── gitattributes
-│       ├── merges.txt
-│       ├── pytorch_model.bin
-│       ├── special_tokens_map.json
-│       ├── tokenizer.json
-│       ├── tokenizer_config.json
-│       ├── vocab.json
 ├── notebooks/
-│   ├── README.md
-│   ├── __init__.py
-│   ├── task-1-scraping-preprocessing.ipynb
-│   ├── task-2-sentiment-thematic-analysis.ipynb
-│   ├── task-3-oracle-storage.ipynb
-│   ├── task-4-insights-visuals.ipynb
+│   ├── task-1-eda-statistical-planning.ipynb
 ├── scripts/
-│   ├── __init__.py
-│   ├── cleaning_runner.py
+│   ├── eda_orchestrator.py
 │   ├── generate_tree.py
-│   ├── oracle_insert.py
-│   ├── run_streamlit.py
-│   ├── scraping_runner.py
-│   ├── sentiment_pipeline.py
-│   ├── visualize_insights.py
+│   ├── version_datasets.py
 ├── src/
-│   ├── __init__.py
-│   ├── cleaning/
-│   │   ├── review_cleaner.py
-│   ├── db/
-│   │   ├── oracle_connector.py
-│   ├── nlp/
-│   │   ├── keyword_theme_extractor.py
-│   │   ├── review_loader.py
-│   │   ├── sentiment_classifier.py
-│   │   ├── stopwords.py
-│   │   ├── text_normalizer.py
-│   ├── scraper/
-│   │   ├── review_scraper.py
-│   └── visualization/
-│       ├── plot_generator.py
-│       ├── theme_data_loader.py
-│       ├── theme_metrics.py
+│   ├── data_loader.py
+│   └── eda/
+│       ├── defensive_schema_auditor.py
+│       ├── distribution_analyzer.py
+│       ├── gender_risk_profiler.py
+│       ├── geo_risk_visualizer.py
+│       ├── iqr_outlier_detector.py
+│       ├── numeric_plotter.py
+│       ├── plan_feature_risk_profiler.py
+│       ├── schema_auditor.py
+│       ├── schema_guardrails.py
+│       ├── temporal_analyzer.py
+│       ├── vehicle_risk_profiler.py
 ├── tests/
-│   ├── __init__.py
-│   ├── test_data_loader.py
-│   ├── test_theme_metrics.py
-│   └── fixtures/
-│       ├── malformed_data.csv
-│       ├── malformed_themes_data.csv
-│       ├── missing_column_data.csv
-│       ├── theme_metrics_data.csv
-│       ├── valid_data.csv
 └── ui/
-    ├── app_streamlit.py
 <!-- TREE END -->
 
 
 ## ✅ Status
 
-- ☑️ Task 1 complete: scraping and cleaning pipeline finalized
+- ☑️ Task 1 complete: Full EDA pipeline implemented across 10 modular risk layers (loss ratio, outliers, geo, schema, etc.)
 
-- ☑️ Task 2 complete: sentiment + theme NLP pipeline implemented and exported
+- ☑️ Task 2 complete: DVC tracking initialized with Git integration, local remote configured, and raw datasets versioned
 
-- ☑️ Streamlit UI for full-cycle review management (scrape → clean)
+- 🏗️ Task 3 scaffolded: Modeling modules prepared for claims classification and segment-level risk prediction
 
-- ☑️ Task 3 complete: Oracle XE relational storage + ER schema
+- 🏗️ Task 4 scaffolded: Feature engineering and pricing optimization logic designed (implementation upcoming)
 
-- ☑️ Task 4 complete: Insight visualizations and KPI diagnostics
+☑️ Project architecture: Fully modular `src/`, `scripts/`, and `notebooks/` structure with reproducible orchestration via `eda_orchestrator.py` and `v`ersion_datasets.py`
 
 
 ## 📦 What's in This Repo
 
 This repository is structured to maximize modularity, reusability, and clarity:
 
-- 📁 Scaffolded directory layout for pipelines, UIs, and NLP modules
+- 📁 Layered Python module structure for risk profiling (src/eda/), geographic mapping (src/geo/), and schema auditing (src/)
 
-- 💻 Streamlit UI for scraping and cleaning with per-bank selection, export toggles, and file previews
+- 🧪 CI-ready architecture using GitHub Actions for reproducible tests via pytest
 
-- 🧪 CI/CD automation via GitHub Actions for reproducibility
+- 📦 DVC integration for versioned tracking of raw and processed datasets (with local remote and cache routing)
 
-- 🧹 Auto-updating README structure using generate_tree.py
+- 🧹 Clean orchestration scripts (eda_orchestrator.py, version_datasets.py) for Task 1–2 reproducibility
 
-- 📚 Notebook-first development with clean progression through all tasks
+- 🧠 Risk analysis modules written with defensive programming, strong validation, and class-based design
 
-- 🧠 NLP pipeline for sentiment scoring and thematic extraction using BERT + TF-IDF + rule-based seeds
+- 📊 Insightful plots (loss ratio heatmaps, bar charts, outlier maps) auto-rendered via orchestrator pipeline
 
-- 📊 Diagnostic plots to support stakeholder-facing UX recommendations
+- 🧾 Consistent Git hygiene with .gitignore, no committed .csv or .venv, and modular commit history
 
-- 📚 **Clear Git hygiene** (no committed `.venv` or `.csv`), commit messages and pull request usage
+- 🧪 Notebook-first development approach supported by CLI runners and reusable core modules
 
 
 - 🧠 **My Contributions:** All project scaffolding, README setup, automation scripts, and CI configuration were done from scratch by me
+
+
+## 🔐 DVC Configuration & Versioning (Task 2)
+This project uses **Data Version Control (DVC)** to ensure auditable and reproducible handling of insurance datasets across all preprocessing stages.
+
+### ✅ Versioned Artifacts
+The following DVC artifacts are tracked and committed to the repository:
+
+File	| Purpose
+--------|---------
+data/raw/MachineLearningRating_v3.txt.dvc	| Tracks raw dataset (customer + claims)
+data/raw/opendb-2025-06-17.csv.dvc	| Tracks auxiliary postal code metadata
+.dvc/config	| Stores remote and cache settings
+.gitignore	| Automatically updated to ignore large .csv files
+
+Note: This project currently uses .dvc-style tracking (per file), not dvc.yaml pipelines. The dvc.yaml file will be added in Task 3–4 for full ML pipeline definition.
+
+### 📦 DVC Remote Configuration
+DVC is configured to use a local remote directory (outside the Git repo) for safe, decoupled storage:
+
+```swift
+
+Remote path: C:/Users/admin/Documents/GIT Repositories/dvc_remote/.dvc/cache
+```
+
+This is specified in .dvc/config as:
+
+```ini
+['cache']
+    dir = C:/Users/admin/Documents/GIT Repositories/dvc_remote/.dvc/cache
+```
+
+And confirmed via:
+
+```bash
+dvc config cache.dir "C:/Users/admin/Documents/GIT Repositories/dvc_remote/.dvc/cache"
+```
+
+### 🔁 How to Push to DVC Remote
+
+To sync all .dvc-tracked data to the configured local remote:
+
+```bash
+dvc add data/raw/MachineLearningRating_v3.txt
+dvc add data/raw/opendb-2025-06-17.csv
+git add data/raw/*.dvc .gitignore
+git commit -m "Track raw datasets with DVC"
+dvc push
+```
+
+### 🔧 Automation Support
+
+For reproducibility, all versioning steps can be automated using:
+
+```bash
+python scripts/version_datasets.py
+```
+
+This script:
+
+- Adds tracked datasets to DVC
+
+- Commits .dvc files to Git
+
+- Pushes artifacts to remote
+
+- Logs all actions to dvc_logs/
+
+
 
 
 ## 🧪 Usage
