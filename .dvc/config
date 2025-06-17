@@ -1,0 +1,5 @@
+[core]
+    remote = localremote
+    autostage = true
+['remote "localremote"']
+    url = C:/Users/admin/Documents/GIT Repositories/dvc_remote
