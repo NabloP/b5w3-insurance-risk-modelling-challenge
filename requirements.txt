@@ -36,3 +36,6 @@ oracledb
 
 # Testing
 pytest
+
+# Versioning
+dvc

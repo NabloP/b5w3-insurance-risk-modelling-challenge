@@ -1,0 +1,5 @@
+outs:
+- md5: 058ed798a4d982477cbb0d4a61919d05
+  size: 153661
+  hash: md5
+  path: opendb-2025-06-17.csv

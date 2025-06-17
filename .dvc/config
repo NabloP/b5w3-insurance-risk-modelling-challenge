@@ -1,0 +1,7 @@
+[core]
+    remote = localremote
+    autostage = true
+[cache]
+    dir = C:/Users/admin/Documents/GIT Repositories/dvc_remote/.dvc/cache
+['remote "localremote"']
+    url = C:/Users/admin/Documents/GIT Repositories/dvc_remote
