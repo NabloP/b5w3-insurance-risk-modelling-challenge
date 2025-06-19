@@ -17,6 +17,7 @@ statsmodels
 # Machine Learning
 scikit-learn
 xgboost
+imblearn
 
 # Interpretability
 shap

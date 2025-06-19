@@ -112,10 +112,12 @@ solar-challenge-week1/
 ├── notebooks/
 │   ├── task-1-eda-statistical-planning.ipynb
 │   ├── task-3-hypothesis-testing.ipynb
+│   ├── task-4-predictive-modeling.ipynb
 ├── scripts/
 │   ├── eda_orchestrator.py
 │   ├── generate_tree.py
 │   ├── hypothesis_testing_orchestrator.py
+│   ├── predictive_modeling_orchestrator.py
 │   ├── version_datasets.py
 ├── src/
 │   ├── data_loader.py
@@ -131,12 +133,22 @@ solar-challenge-week1/
 │   │   ├── schema_guardrails.py
 │   │   ├── temporal_analyzer.py
 │   │   ├── vehicle_risk_profiler.py
-│   └── hypothesis_testing/
-│       ├── data_cleaner.py
-│       ├── group_segmenter.py
-│       ├── hypothesis_tester.py
-│       ├── metric_definitions.py
-│       ├── visual_tester.py
+│   ├── hypothesis_testing/
+│   │   ├── data_cleaner.py
+│   │   ├── group_segmenter.py
+│   │   ├── hypothesis_tester.py
+│   │   ├── metric_definitions.py
+│   │   ├── visual_tester.py
+│   └── modeling/
+│       ├── class_balancer.py
+│       ├── expected_premium_calculator.py
+│       ├── feature_scaler.py
+│       ├── logistic_model_trainer.py
+│       ├── random_forest_trainer.py
+│       ├── target_feature_builder.py
+│       ├── train_test_splitter.py
+│       ├── xgboost_model_trainer.py
+│       ├── xgboost_regressor_trainer.py
 ├── tests/
 └── ui/
 <!-- TREE END -->
@@ -150,9 +162,18 @@ solar-challenge-week1/
 
 - ☑️ Task 3 complete: Fully modular A/B testing pipeline implemented with group segmentation, adaptive t-test or Mann–Whitney testing, effect size logging, and KPI visualizations. Province-level comparison between Western Cape and Gauteng now reproducible via `scripts/hypothesis_testing_orchestrator.py`.
 
-- 🏗️ Task 4 scaffolded: Feature engineering and pricing optimization logic designed (implementation upcoming)
+- ☑️ Task 4 complete: Predictive modeling pipeline with classification, regression, SHAP, and premium estimation
 
-☑️ Project architecture: Fully modular `src/`, `scripts/`, and `notebooks/` structure with reproducible orchestration via `eda_orchestrator.py` and `v`ersion_datasets.py`
+☑️ Project architecture: Fully modular `src/`, `scripts/`, and `notebooks/` structure with reproducible orchestration via `eda_orchestrator.py` and `version_datasets.py`
+
+
+## 📦 Key Capabilities
+
+- ✅ Class-based, modular Python modules for full insurance ML workflow  
+- ✅ Risk signal extraction with KPIs: `ClaimFrequency`, `ClaimSeverity`, `Margin`  
+- ✅ Segment-aware A/B testing (by Province, Gender, etc.)  
+- ✅ Explainable models using SHAP for both classification + regression  
+- ✅ Premium engine: **Premium = P(Claim) × E[ClaimAmount] + Margin**
 
 
 ## 📦 What's in This Repo
@@ -338,6 +359,29 @@ This script:
 
 Script can be extended to compare **Gender**, **ZipCode**, or any other categorical column by updating the GroupSegmenter.
 
+
+### 🤖 Task 4 – Predictive Modeling Pipeline
+
+```bash
+python scripts/predictive_modeling_orchestrator.py
+```
+
+This script:
+- Prepares modeling data (with feature engineering, outlier handling)
+- Trains:
+  - Logistic Regression
+  - Random Forest
+  - XGBoost (Classifier & Regressor)
+- Evaluates models on:
+  - F1, ROC-AUC (classification)
+  - RMSE, R² (regression)
+- Runs SHAP explainability on the best model
+- Computes expected premium:
+  `Premium = P(Claim) × E[Severity] + Margin`
+- Saves all outputs to `data/outputs/`:
+  - `model_performance_metrics.csv`
+  - `predicted_premiums.csv`
+  - `shap_summary.png`
 
 
 ## 🧠 Design Philosophy
